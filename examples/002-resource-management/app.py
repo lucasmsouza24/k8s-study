@@ -20,7 +20,7 @@ memory_holder = []
 @app.get('/memory')
 def consume_memory():
     # adding ~10MB for each request
-    chunk = "x" * (10 * 1024 * 1024)
+    chunk = "x" * (50 * 1024 * 1024)
     memory_holder.append(chunk)
 
     return {
