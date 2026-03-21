@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     app_name: str = 'Awesome API'
     admin_email: str = 'admin@email.com'
     stage: str = os.getenv('STAGE', 'unknow')
+    db: str = os.getenv('DB_PASSWORD', 'unknow')
 
 settings = Settings()
 app = FastAPI()
@@ -22,4 +23,5 @@ def info():
         'stage': settings.stage,
         'app_name': settings.app_name,
         'admin_email': settings.admin_email,
+        'db_password': settings.db
     }

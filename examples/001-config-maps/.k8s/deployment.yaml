@@ -26,6 +26,11 @@ spec:
               configMapKeyRef:
                 name: api001-configmap
                 key: stage
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: api001-secret
+                key: db_password
         resources:
           requests:
             cpu: "100m"
