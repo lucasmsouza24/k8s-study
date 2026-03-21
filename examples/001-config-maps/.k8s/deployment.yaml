@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api001-deployment
+  labels:
+    app: api001
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api001
+  template:
+    metadata:
+      labels:
+        app: api001
+    spec:
+      containers:
+      - name: api001
+        image: api001
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+        env:
+          - name: STAGE
+            valueFrom:
+              configMapKeyRef:
+                name: api001-configmap
+                key: stage
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
