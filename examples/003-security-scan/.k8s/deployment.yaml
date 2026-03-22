@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api003
+  labels:
+    app: api003
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api003
+  template:
+    metadata:
+      labels:
+        app: api003
+    spec:
+      containers:
+      - name: api003
+        image: api003:IMAGE_TAG
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "64Mi"
+          limits:
+            cpu: "100m"
+            memory: "128Mi"
+        
