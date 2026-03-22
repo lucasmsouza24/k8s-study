@@ -7,12 +7,15 @@ build:
 load:
 	minikube image load $(IMAGE_NAME):$(TAG)
 
+scan-image:
+	trivy image --severity HIGH,CRITICAL --exit-code 1 $(IMAGE_NAME):$(TAG)
+
 deploy:
 	sed "s|IMAGE_TAG|$(TAG)|g" .k8s/deployment.yaml | kubectl apply -f -
 	sleep 5
 	kubectl port-forward deployment/api003 8000:8000
 
-start: build load deploy
+start: build scan-image load deploy
 
 clear:
 	kubectl delete -f .k8s/deployment.yaml || true
