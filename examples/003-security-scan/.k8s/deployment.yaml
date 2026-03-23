@@ -14,12 +14,19 @@ spec:
       labels:
         app: api003
     spec:
+      securityContext:
+        runAsNonRoot: true
       containers:
       - name: api003
         image: api003:IMAGE_TAG
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
         resources:
           requests:
             cpu: "50m"
