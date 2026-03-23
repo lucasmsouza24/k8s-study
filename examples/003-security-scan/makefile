@@ -15,6 +15,13 @@ scan-fs:
 	--exit-code 1 \
 	.
 
+# 🟡 Config scan (YAML)
+scan-config:
+	trivy config \
+	--severity HIGH,CRITICAL \
+	--exit-code 1 \
+	.k8s/
+
 scan-image:
 	trivy image --severity HIGH,CRITICAL --exit-code 1 $(IMAGE_NAME):$(TAG)
 
