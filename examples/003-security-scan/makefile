@@ -14,6 +14,7 @@ scan-fs:
 	--severity HIGH,CRITICAL \
 	--exit-code 1 \
 	.
+	@echo "secure fs ✅"
 
 # 🟡 Config scan (YAML)
 scan-config:
@@ -21,17 +22,28 @@ scan-config:
 	--severity HIGH,CRITICAL \
 	--exit-code 1 \
 	.k8s/
+	@echo "secure YAMLs ✅"
 
 # 🔴 Image scan
 scan-image:
 	trivy image --severity HIGH,CRITICAL --exit-code 1 $(IMAGE_NAME):$(TAG)
+	@echo "secure image ✅"
 
 deploy:
 	sed "s|IMAGE_TAG|$(TAG)|g" .k8s/deployment.yaml | kubectl apply -f -
+
+# 🔵 Cluster scan (opcional no começo)
+scan-cluster:
+	trivy k8s minikube \
+	--report all \
+	--severity HIGH,CRITICAL \
+	--include-namespaces default \
+	--exit-code 1
+	@echo "secure cluster ✅"
+
+start: scan-fs scan-config build scan-image load deploy scan-cluster
 	sleep 5
 	kubectl port-forward deployment/api003 8000:8000
-
-start: build scan-image load deploy
 
 clear:
 	kubectl delete -f .k8s/deployment.yaml || true
