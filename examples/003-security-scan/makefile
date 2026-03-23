@@ -22,6 +22,7 @@ scan-config:
 	--exit-code 1 \
 	.k8s/
 
+# 🔴 Image scan
 scan-image:
 	trivy image --severity HIGH,CRITICAL --exit-code 1 $(IMAGE_NAME):$(TAG)
 
