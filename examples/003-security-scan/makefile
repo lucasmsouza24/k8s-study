@@ -7,6 +7,14 @@ build:
 load:
 	minikube image load $(IMAGE_NAME):$(TAG)
 
+# 🟢 FS scan (dependências + secrets)
+scan-fs:
+	trivy fs \
+	--scanners vuln,secret \
+	--severity HIGH,CRITICAL \
+	--exit-code 1 \
+	.
+
 scan-image:
 	trivy image --severity HIGH,CRITICAL --exit-code 1 $(IMAGE_NAME):$(TAG)
 
