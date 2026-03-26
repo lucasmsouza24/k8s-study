@@ -4,7 +4,7 @@ set -e
 RG="aks-study-1"
 CLUSTER="aks-study"
 LOCATION="eastus"
-NODE_SIZE="Standard_B2s"
+NODE_SIZE="Standard_D2s_v3"
 
 if [ -z "$SUBSCRIPTION" ]; then
   echo "Erro: variável SUBSCRIPTION não definida"
