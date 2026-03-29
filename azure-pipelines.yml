@@ -1,0 +1,43 @@
+# Docker
+# Build and push an image to Azure Container Registry
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- main
+
+resources:
+- repo: self
+
+variables:
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: '497dd62f-a58e-4466-b21f-b6b7e305923b'
+  imageRepository: 'api1'
+  containerRegistry: 'acrstudy.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/001-config-maps-and-secrets/Dockerfile'
+  tag: '$(Build.BuildId)'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+  group: 
+    API1_PRD
+
+stages:
+- stage: Build
+  displayName: Build and push stage
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)-$(API2_ENVIRONMENT)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+        arguments: |
+          --build-arg API2_ENVIRONMENT=$(API2_ENVIRONMENT)
