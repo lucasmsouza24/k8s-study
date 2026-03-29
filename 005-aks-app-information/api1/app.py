@@ -1,11 +1,16 @@
 from fastapi import FastAPI
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 app = FastAPI()
 
 @app.get('/')
 def read_root():
     return {
-        'hello': 'world!!!'
+        'hello': 'world!!!',
+        'env': os.getenv('API2_ENVIRONMENT', 'unknow')
     }
 
 @app.get('/calc/{value}')

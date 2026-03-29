@@ -1,5 +1,9 @@
 FROM python:3.14-slim
 
+ARG API2_ENVIRONMENT=dev
+
+ENV API2_ENVIRONMENT=$API2_ENVIRONMENT
+
 WORKDIR /app
 
 RUN pip install uv
