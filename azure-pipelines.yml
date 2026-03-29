@@ -19,7 +19,7 @@ variables:
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
   group: 
-    API1_PRD
+    API1_HOM
 
 stages:
 - stage: Build
@@ -34,7 +34,7 @@ stages:
       displayName: Build and push an image to container registry
       inputs:
         command: buildAndPush
-        repository: $(imageRepository)-$(API2_ENVIRONMENT)
+        repository: $(imageRepository)-hom
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
