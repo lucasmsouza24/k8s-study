@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: api1-__ENV__
-        image: api1-__ENV__:__TAG__
+        image: __IMAGE__
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
