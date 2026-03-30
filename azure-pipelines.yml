@@ -36,6 +36,7 @@ stages:
         repository: $(imageRepository)-hom
         dockerfile: $(dockerfilePath)
         buildContext: '$(Build.SourcesDirectory)/005-aks-app-information/api1'
+        containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
         arguments: |
