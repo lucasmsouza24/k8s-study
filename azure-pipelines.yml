@@ -30,14 +30,22 @@ stages:
       vmImage: $(vmImageName)
     steps:
     - task: Docker@2
-      displayName: Build and push an image to container registry
+      displayName: Build image
       inputs:
-        command: buildAndPush
+        command: build
         repository: $(imageRepository)-hom
         dockerfile: $(dockerfilePath)
         buildContext: '$(Build.SourcesDirectory)/005-aks-app-information/api1'
-        containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
         arguments: |
           --build-arg API2_ENVIRONMENT=$(API2_ENVIRONMENT)
+
+    - task: Docker@2
+      displayName: Push image
+      inputs:
+        command: push
+        repository: $(imageRepository)-hom
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
