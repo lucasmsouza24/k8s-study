@@ -13,7 +13,7 @@ variables:
   dockerRegistryServiceConnection: '497dd62f-a58e-4466-b21f-b6b7e305923b'
   imageRepository: 'api1'
   containerRegistry: 'acrstudy.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/001-config-maps-and-secrets/Dockerfile'
+  dockerfilePath: '$(Build.SourcesDirectory)/001-config-maps-and-secrets/api1/Dockerfile'
   tag: '$(Build.BuildId)'
 
   # Agent VM image name
@@ -36,6 +36,7 @@ stages:
         command: buildAndPush
         repository: $(imageRepository)-hom
         dockerfile: $(dockerfilePath)
+        buildContext: '$(Build.SourcesDirectory)/005-aks-app-information/api1'
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
