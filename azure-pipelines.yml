@@ -7,7 +7,7 @@ trigger:
 
 resources:
 - repo: self
-
+  
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '497dd62f-a58e-4466-b21f-b6b7e305923b'
@@ -15,11 +15,10 @@ variables:
   containerRegistry: 'acrstudy.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/005-aks-app-information/api1/Dockerfile'
   tag: '$(Build.BuildId)'
-
+  API2_ENVIRONMENT: hom
+  
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
-  group: 
-    API1_HOM
 
 stages:
 - stage: Build
