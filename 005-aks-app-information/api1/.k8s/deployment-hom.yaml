@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api1-__ENV__
+  name: api1-hom
   labels:
-    app: api1-__ENV__
+    app: api1-hom
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: api1-__ENV__
+      app: api1-hom
   template:
     metadata:
       labels:
-        app: api1-__ENV__
+        app: api1-hom
     spec:
       containers:
-      - name: api1-__ENV__
-        image: __IMAGE__
-        imagePullPolicy: IfNotPresent
+      - name: api1-hom
+        image: acrstudy.azurecr.io/api1-hom:90
+        imagePullPolicy: Always
         ports:
-        - containerPort: 8080
+        - containerPort: 8000
         resources:
           requests:
             cpu: 50m
