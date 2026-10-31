@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1-blue
+  labels:
+    app: app1-blue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app1-blue
+  template:
+    metadata:
+      labels:
+        app: app1-blue
+    spec:
+      containers:
+      - name: app1-blue
+        image: docker.io/library/app1:v1.0
+        ports:
+        - containerPort: 8080

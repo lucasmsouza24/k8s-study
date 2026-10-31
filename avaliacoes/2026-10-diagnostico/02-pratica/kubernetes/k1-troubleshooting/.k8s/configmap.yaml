@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: echo-config
+  namespace: aval-k1
+data:
+  message: "avaliacao-k1-ok"
