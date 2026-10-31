@@ -28,17 +28,17 @@ Ao final, sem consulta, eu consigo:
 
 Responda antes de estudar, sem consulta. Não apague depois: é o registro do ponto de partida.
 
-**D-04 · A instrução `EXPOSE 8000` no Dockerfile torna a porta acessível a partir do host? Qual a relação entre `EXPOSE` e `docker run -p 8080:8000`?**
+**D-04 · A instrução** `EXPOSE 8000` **no Dockerfile torna a porta acessível a partir do host? Qual a relação entre** `EXPOSE` **e** `docker run -p 8080:8000`**?**
 
-> (sua resposta original no diagnóstico teve nota 1; responda de novo sem olhar)
+> 'EXPOSE 8000' no Dockerfile, faz com que a porta 8000 do container fique disponível para escuta. 'docker run -p 8080:8000' faz cria uma ligação entre a porta 8000 do container e a porta 8080 do HOST.
 
-**Quando um `curl` falha, qual a diferença entre receber "Connection refused" e ficar esperando até dar timeout?**
+**Quando um** `curl` **falha, qual a diferença entre receber "Connection refused" e ficar esperando até dar timeout?**
 
->
+> Ao receber 'Connection refused' temos a informação de que a conexão encontrou seu destino, e foi recusada por algum motivo. Já ao receber timeout, significa que o endereço destino não foi encontrado.
 
 **O que significa um servidor "escutar em 0.0.0.0"?**
 
->
+> 'escutar em 0.0.0.0' faz com que a comunicação fique aberta para fora do contexto. se uma aplicação rodar por exemplo em 127.0.0.1 ela só fica disponível de dentro da própria máquina, comunicação externa não consegue alcançar 127.0.0.1. Já tive um problema semelhante quando usei WSL com docker, foi necessário subir a aplicação apontando para 0.0.0.0, pois acredito que no caso do WSL existem 2 máquinas HOST, a HOST pai é a própria máquina e a HOST filho é o WSL (que é host do docker) então ao rodar em 127.0.0.1 só fica acessível de dentro do WSL.
 
 ## Roteiro de estudo
 
@@ -46,7 +46,8 @@ Fonte principal: [Cloudflare Learning Center](https://www.cloudflare.com/learnin
 
 | # | Conteúdo | Fonte | Feito |
 |---|---|---|---|
-| 1 | Endereço IP, sub-rede, CIDR, IP privado × público (faixas 10/8, 172.16/12, 192.168/16) | Cloudflare Learning (artigos sobre *Internet Protocol* e *subnet*) | [ ] |
+| 1a | Endereço IP: IPv4 × IPv6, loopback, público × privado, roteamento | Cloudflare Learning (artigos sobre *Internet Protocol*) → [checkpoint 01](checkpoints/01-ip.md) | [ ] |
+| 1b | Sub-rede e CIDR, faixas privadas (10/8, 172.16/12, 192.168/16) | Cloudflare Learning (artigo sobre *subnet*) | [ ] |
 | 2 | NAT: como vários dispositivos saem para a internet com um único IP público | Cloudflare Learning ou Kurose & Ross, capítulo da camada de rede (seção de NAT) | [ ] |
 | 3 | TCP × UDP, portas, three-way handshake, encerramento (FIN/RST) | Cloudflare Learning (artigos sobre *TCP/IP* e *computer port*) + HPBN, *Building Blocks of TCP* (até "Flow Control") | [ ] |
 | 4 | Sockets, `127.0.0.1` × `0.0.0.0`, refused × timeout × reset | [Labs 2 e 3](labs/) (aprender fazendo) + `man ss` | [ ] |

@@ -27,6 +27,7 @@ Cada módulo vive em `trilhas/<trilha>/<NN-modulo>/`, criado a partir de [`templ
 
 | Dinâmica | Onde | Quando |
 |---|---|---|
+| **Checkpoint** | `<modulo>/checkpoints/` | No meio do módulo, quando um subtema terminar: rodada curta de questões antes de seguir para o próximo. Não substitui a prova |
 | **Diário de sessão** | `diario/AAAA-MM.md` | Toda sessão, 5 min no final: o que fiz, o que aprendi, dúvidas, próximo passo |
 | **Casos reais** | `casos-reais/` | Quando resolver (ou não conseguir resolver) um problema no trabalho. Liga o sintoma ao mecanismo e mostra a evolução no portfólio |
 | **Projetos** | `projetos/` | No fim de cada fase. Junta vários módulos em algo real |

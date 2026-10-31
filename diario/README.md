@@ -9,4 +9,4 @@ Para que serve:
 
 | Mês | Sessões | Horas | Destaques |
 |---|---|---|---|
-| [2026-10](2026-10.md) | 3 | | avaliação diagnóstica, reestruturação do repo |
+| [2026-10](2026-10.md) | 4 | | avaliação diagnóstica, reestruturação do repo, início de Redes 01 |
