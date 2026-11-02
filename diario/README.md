@@ -9,4 +9,5 @@ Para que serve:
 
 | Mês | Sessões | Horas | Destaques |
 |---|---|---|---|
-| [2026-10](2026-10.md) | 4 | | avaliação diagnóstica, reestruturação do repo, início de Redes 01 |
+| [2026-10](2026-10.md) | 5 | | avaliação diagnóstica, reestruturação do repo, início de Redes 01 |
+| [2026-11](2026-11.md) | 1 | | Redes 01: sub-redes e CIDR |

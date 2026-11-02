@@ -46,8 +46,9 @@ Fonte principal: [Cloudflare Learning Center](https://www.cloudflare.com/learnin
 
 | # | Conteúdo | Fonte | Feito |
 |---|---|---|---|
-| 1a | Endereço IP: IPv4 × IPv6, loopback, público × privado, roteamento | Cloudflare Learning (artigos sobre *Internet Protocol*) → [checkpoint 01](checkpoints/01-ip.md) | [ ] |
-| 1b | Sub-rede e CIDR, faixas privadas (10/8, 172.16/12, 192.168/16) | Cloudflare Learning (artigo sobre *subnet*) | [ ] |
+| 1a | Endereço IP: IPv4 × IPv6, loopback, público × privado, roteamento | Cloudflare Learning (artigos sobre *Internet Protocol*) → [checkpoint 01](checkpoints/01-ip.md) | [x] |
+| 1b | Sub-rede e máscara (conceito) | [Cloudflare — O que é uma sub-rede?](https://www.cloudflare.com/pt-br/learning/network-layer/what-is-a-subnet/) → [checkpoint 02, parte A](checkpoints/02-subredes.md). Atenção: o artigo apresenta as classes A/B/C como se fossem atuais; elas estão obsoletas desde 1993 | [x] |
+| 1c | Máscara em binário, CIDR, rede/broadcast, hosts utilizáveis, divisão em sub-redes, faixas privadas (10/8, 172.16/12, 192.168/16) | [Wikipedia — Classless Inter-Domain Routing](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) (seções de notação e blocos) + praticar com `ipcalc` (mostra os bits) → [checkpoint 02, parte B](checkpoints/02-subredes.md) | [x] |
 | 2 | NAT: como vários dispositivos saem para a internet com um único IP público | Cloudflare Learning ou Kurose & Ross, capítulo da camada de rede (seção de NAT) | [ ] |
 | 3 | TCP × UDP, portas, three-way handshake, encerramento (FIN/RST) | Cloudflare Learning (artigos sobre *TCP/IP* e *computer port*) + HPBN, *Building Blocks of TCP* (até "Flow Control") | [ ] |
 | 4 | Sockets, `127.0.0.1` × `0.0.0.0`, refused × timeout × reset | [Labs 2 e 3](labs/) (aprender fazendo) + `man ss` | [ ] |
