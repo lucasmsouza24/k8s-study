@@ -46,7 +46,7 @@ Como a máscara é utilizada? Internamente, o dispositivo aplica a máscara nos 
 
 ## IP privado × público e NAT
 
-### IP Privado 
+### IP Privado
 
 Um endereço de IP privado faz parte de uma rede privada, que não está aberta para a internet pública (pelo menos não diretamente)
 
@@ -60,11 +60,11 @@ Como explicado acima, IPs privados não tem acesso direto à internet, o acesso 
 
 #### NAT Estático
 
-Um NAT estático estabelece um mapeamento 1:1 do IP público da rede com um IP privado de dispositivo dentro da rede (quase como se o IP privado fosse traduzido para o IP público antes de saír da internet, e vice versa para entrar na rede privada). Funciona bem bem para aplicações que precisam estar acessíveis 24/7 como aplicações web, apis, etc.
+Um NAT estático estabelece um mapeamento 1:1 do IP público da rede com um IP privado de dispositivo dentro da rede (é sempre uma configuração manual, quase como se o IP privado fosse traduzido para o IP público antes de saír da internet, e vice versa para entrar na rede privada). Funciona bem bem para aplicações que precisam estar acessíveis 24/7 como aplicações web, apis, etc.
 
 #### NAT Dinâmico
 
-De certa perspectiva, um NAT dinâmico também cria um mapeamento de 1:1 (com a parte da reescrita de origem/destino exatamente igual) com o IP privada para o IP público da rede, com a diferença de que esse mapeamento só é estabelecida quando o dispositivo da rede faz abre uma request pra fora, o mapeamento é desfeita após o tempo sem tráfego. Ou seja, solicitações de fora da rede nunca conseguem alcançar um dispositivo da rede privada, pois não há garantia de que o mapeamento estará aberta. 
+De certa perspectiva, um NAT dinâmico também cria um mapeamento de 1:1 (com a parte da reescrita de origem/destino exatamente igual) com o IP privada para o IP público da rede, com a diferença de que esse mapeamento só é estabelecida quando o dispositivo da rede abre uma request pra fora, o mapeamento é desfeito após o tempo sem tráfego. Ou seja, solicitações de fora da rede nunca conseguem alcançar um dispositivo da rede privada, pois não há garantia de que o mapeamento estará aberto. 
 
 É interessante declarar que muitas explicações sobre NAT Dinâmico usam como exemplo redes com múltiplos IPs públicos, onde a saída de rede pode acontecer abrindo conexões 1:1 para algum IP disponível no momento da solicitação. Esse modelo não é comumente utilizado, pois é limitado em vários sentidos, principalmente pq se só houver 1 IP de saída, somente um dispositivo consegue estabelecer um mapeamento por vez, tornando uma rede com múltiplos dispositivos privados praticamente inviável.
 
@@ -77,6 +77,14 @@ Quando um browser faz solicitações, a solicitação é feita por uma porta do 
 Dessa forma, diversos dispositivos conseguem abrir conexões ao mesmo tempo usando o mesmo IP público.
 
 Importante: o PAT só funciona para conexões que os dispositivos de dentro da rede **iniciam**. Cada entrada da tabela é criada quando um dispositivo abre uma conexão para fora, só aceita as respostas dessa conexão e expira quando ela termina ou fica um tempo sem tráfego. Um pacote que chega de fora sem uma entrada correspondente na tabela é descartado. Ou seja, o PAT não torna nenhum dispositivo acessível a partir da internet.
+
+### SNAT
+
+Source NAT -> é o processo de reescrita do endereço fonte. Acontece tanto no NAT dinâmico quanto no estático.
+
+### DNAT
+
+Destination NAT -> é o processo de reescrita do endereço destino. 
 
 ## TCP × UDP e o three-way handshake
 
