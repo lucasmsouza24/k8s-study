@@ -88,6 +88,62 @@ Destination NAT -> é o processo de reescrita do endereço destino.
 
 ## TCP × UDP e o three-way handshake
 
+### TCP
+
+TCP protocolo que define como a comunicação vai acontecer. TCP é um protocolo confiável e mais lento em relação ao outro protocolo de transmissão conhecido UDP.  
+Com o TCP, a confirmação de recebimento dos pacotes é tão importante quanto o próprio recebimento dos pacotes, o foco é a confiabilidade e não a velocidade.  
+Fatores importantes:  
+
+- Estabelecimento de conexão antes do envio  
+- Confirmação de recebimento  
+- Ordem dos pacotes  
+- Reenvio de pacotes não recebidos  
+- Controle do fluxo de envio (pra não sobrecarregar o receptor)
+
+Comunicações TCP aplicam um processo chamado Three-Way-Handshake, é o envio/recebimento de mensagens antes de iniciar o transporte dos pacotes em sí:  
+Source -------SYN-------> Destination (solicitação para sincronizar)  
+Source <---SYN-ACK---- Destination (solicitação recebida e aceita)  
+Source -------ACK-------> Destination (confirmando estabelecimento da conexão, informando que vai começar a transferência dos pacotes)
+
+Para cada envio de pacote é passada a ordem do pacote, para que os pacotes sejam remontados corretamente, e o Source aguarda por uma confirmação de recebimento do Destination (ACK), mas não de forma ociosa, os envios continuam acontecendo. Caso essa confirmação não chegue dentro de um tempo esperado, o pacote é reenviado e uma nova confirmação é aguardada.  O ACK é cumulativo, não há um ACK para cada pacote, a mensagem é mais parecida com "Recebi até o pacote X".
+
+#### Fechamento de conexão
+
+Algumas mensagens são reservadas para o fechamento de conexões:  
+
+- RST: Fecha a conexão abruptamente, ou sinaliza que uma conexão ainda não aberta não terá seguimento, por diversos motivos como "porta não escutando".   
+- FIN: Sinaliza desejo de finalizar conexão de forma "graciosa", não finaliza a conexão de cara, permanece aberta para recebimento de mensagens.
+
+FIN  
+
+- SOURCE ----FIN-----> DESTINATION (Sinaliza que não há mais pacotes há enviar, e "solicita" fechamento da conexão)  
+- SOURCE <---ACK----- DESTINATION (Confirma recebimento)  
+- SOURCE <---FIN------ DESTINATION (Sinaliza que está pronto para o encerramento, claro que esse momento pode ser utilizado para enviar pacotes ao inves de também sinalizar o encerramento da conexão)  
+- SOURCE ----ACK-----> DESTINATION   
+- DESTINATION fecha a conexão  
+- SOURCE aguarda um tempo protocolar e encerra a conexão logo após
+
+já o RST é uma mensagem que não depende de aguardar confirmações, é como se fosse um "estou encerrando a conexão, não vou continuar a conversa e nem mesmo ler suas respostas". O RST também é utilizado para sinalizar que uma conexão não iniciará, se um SYN chegar à uma porta que não está "listening" o RST é enviado ao inves do SYN-ACK, isso gera o erro Connection refused.
+
+Por conta de todo esse processo e um maior cabeçalho (para comportar todas as informações de confirmação, controle de fluxo, etc) o TCP é bastante confiável mas também demora mais para que a comunicação aconteça em relação ao UDP.
+
+### UDP
+
+O protocolo UDP é bem mais "simples" que o TCP, pois não há:  
+
+- Handshake (estabelecimento de conexão)  
+- Garantia de recebimento  
+- Controle de fluxo  
+- Ordem de recebimento
+
+É simplesmente um envio de pacote, só são necessários as portas de fonte/destino, o conteúdo à ser enviado e o tamanho desse conteúdo. Também existe um campo opcional chamado Checksum para verificar se algum pacote se corrompeu no caminho (mas isso não é usado para corrigir nada).
+
+Por ser muito mais simples, o envio é muito mais rápido, mas não é garantido em sua totalidade. 
+
+### Qual é melhor?
+
+Um protocolo não substitui o outro, ambos são bons no que se propõem. Em aplicações onde cada bit importa o TCP reina pela sua confiabilidade (como em aplicativos de mensagens, sites, etc). Já para chamadas de voz/vídeo, transmissões ao vivo e jogos online o UDP pode ser mais utilizado por conta da baixa latencia e o fato do não recebimento de alguns pacotes não afetarem tanto a experiencia da aplicação (se não forem tantos pacotes perdidos)
+
 ## Portas e sockets
 
 ## 127.0.0.1 × 0.0.0.0
