@@ -298,9 +298,55 @@ curl -s http://127.0.0.1:8001/ -o /dev/null
 
 Responda:
 
-1. Identifique na saída as flags `[S]`, `[S.]`, `[.]`, `[P.]` e `[F.]`. O que cada uma é?
-2. O que aparece na conexão para a porta 8001? Por que é isso que gera o "Connection refused"?
-3. Qual foi a **porta de origem** do `curl`? De onde ela vem?
+```bash
+lucas@cachyos:~/dev/k8s-study/$ sudo tcpdump -i lo -n 'tcp port 8000 or tcp port 8001'
+[sudo] senha para lucas: 
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on lo, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+
+^B22:09:51.603982 IP 127.0.0.1.44836 > 127.0.0.1.8000: Flags [S], seq 3243809125, win 65495, options [mss 65495,sackOK,TS val 2574130018 ecr 0,nop,wscale 10], length 0
+
+22:09:51.603993 IP 127.0.0.1.8000 > 127.0.0.1.44836: Flags [S.], seq 629919148, ack 3243809126, win 65483, options [mss 65495,sackOK,TS val 1334440102 ecr 2574130018,nop,wscale 10], length 0
+
+22:09:51.604001 IP 127.0.0.1.44836 > 127.0.0.1.8000: Flags [.], ack 1, win 64, options [nop,nop,TS val 2574130018 ecr 1334440102], length 0
+
+22:09:51.604036 IP 127.0.0.1.44836 > 127.0.0.1.8000: Flags [P.], seq 1:79, ack 1, win 64, options [nop,nop,TS val 2574130018 ecr 1334440102], length 78
+
+22:09:51.604041 IP 127.0.0.1.8000 > 127.0.0.1.44836: Flags [.], ack 79, win 64, options [nop,nop,TS val 1334440102 ecr 2574130018], length 0
+22:09:51.604549 IP 127.0.0.1.8000 > 127.0.0.1.44836: Flags [P.], seq 1:156, ack 79, win 64, options [nop,nop,TS val 1334440103 ecr 2574130018], length 155
+
+22:09:51.604555 IP 127.0.0.1.44836 > 127.0.0.1.8000: Flags [.], ack 156, win 64, options [nop,nop,TS val 2574130019 ecr 1334440103], length 0
+
+22:09:51.604571 IP 127.0.0.1.8000 > 127.0.0.1.44836: Flags [P.], seq 156:991, ack 79, win 64, options [nop,nop,TS val 1334440103 ecr 2574130019], length 835
+
+22:09:51.604575 IP 127.0.0.1.44836 > 127.0.0.1.8000: Flags [.], ack 991, win 64, options [nop,nop,TS val 2574130019 ecr 1334440103], length 0
+
+22:09:51.604596 IP 127.0.0.1.8000 > 127.0.0.1.44836: Flags [F.], seq 991, ack 79, win 64, options [nop,nop,TS val 1334440103 ecr 2574130019], length 0
+
+22:09:51.604596 IP 127.0.0.1.44836 > 127.0.0.1.8000: Flags [F.], seq 79, ack 991, win 64, options [nop,nop,TS val 2574130019 ecr 1334440103], length 0
+
+22:09:51.604601 IP 127.0.0.1.8000 > 127.0.0.1.44836: Flags [.], ack 80, win 64, options [nop,nop,TS val 1334440103 ecr 2574130019], length 0
+
+22:09:51.604605 IP 127.0.0.1.44836 > 127.0.0.1.8000: Flags [.], ack 992, win 64, options [nop,nop,TS val 2574130019 ecr 1334440103], length 0
+
+
+22:10:05.341703 IP 127.0.0.1.42934 > 127.0.0.1.8001: Flags [S], seq 2816935449, win 65495, options [mss 65495,sackOK,TS val 3220904468 ecr 0,nop,wscale 10], length 0
+
+22:10:05.341710 IP 127.0.0.1.8001 > 127.0.0.1.42934: Flags [R.], seq 0, ack 2816935450, win 0, length 0
+```
+
+1. Identifique na saída as flags `[S]`, `[S.]`, `[.]`, `[P.]` e `[F.]`. O que cada uma é?  
+> Me parece que essas flags são equivalentes às mensagens do handshake:  
+[S] -> SYN  
+[S.] -> SYN-ACK  
+[ . ] -> ACK  
+[P.] -> PSH-ACK -> marca os segmentos que carregam dados (length > 0)  
+[F.] -> FIN-ACK
+2. O que aparece na conexão para a porta 8001? Por que é isso que gera o "Connection refused"?  
+> Tentativa de abertura de conexão com SYN -> [S]  
+como a porta 8001 não estava escutando nada do lado do servidor, a conexão foi recusada com RST -> [R.]
+3. Qual foi a **porta de origem** do `curl`? De onde ela vem?  
+> na primeira tentativa, a porta foi 44836 na segunda a porta foi 42934. São portas dentro de um range que o kernel utiliza para realizar conexões TCP
 
 ---
 
